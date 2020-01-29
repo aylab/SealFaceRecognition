@@ -31,21 +31,38 @@ import tflib
 
 class Network:
     def __init__(self):
+        #creates instance of a dataflow graph
+        #graph represents data flow of the computations
+        #A computational graph (or graph in short) is a series of TensorFlow operations arranged into a graph of nodes
+        #Each node is called an op; used for operations on tensors or generating tensors
+        #Nodes inputs are tensors and output tensors 
         self.graph = tf.Graph()
+        # allow_growth cauases memory of a gpu to be fully allocated to the process
         gpu_options = tf.GPUOptions(allow_growth=True)
+        # allow_soft_placement is true so an op will be placed on a CPU if a GPU is not avaliable
+        # log_device_placement just prints device info while building the graph
         tf_config = tf.ConfigProto(gpu_options=gpu_options,
                 allow_soft_placement=True, log_device_placement=False)
+        #a session object encapsulate the environment in which operation objects are executed
+        #To compute anythinga  graph must be launched in a session which places graph ops on cpus or gpus
         self.sess = tf.Session(graph=self.graph, config=tf_config)
             
     def initialize(self, config, num_classes):
         '''
             Initialize the graph from scratch according config.
         '''
+        #A default graph is registered, operations will be added to the graph
         with self.graph.as_default():
+            #A default session is created, operations will be added to the session
             with self.sess.as_default():
                 # Set up placeholders
+                #width and height from image size, [112,112]
                 w, h = config.image_size
+                #channels = 3 (RGB)
                 channels = config.channels
+                #A placeholder is a variable that we will assign data to at a later date
+                #It allows us to create our operations and build our computation graph without needing the data.
+                #In TensorFlowterminology, we then feed data into the graph through these placeholders.
                 image_batch_placeholder = tf.placeholder(tf.float32, shape=[None, h, w, channels], name='image_batch')
                 label_batch_placeholder = tf.placeholder(tf.int32, shape=[None], name='label_batch')
                 learning_rate_placeholder = tf.placeholder(tf.float32, name='learning_rate')
@@ -53,19 +70,27 @@ class Network:
                 phase_train_placeholder = tf.placeholder(tf.bool, name='phase_train')
                 global_step = tf.Variable(0, trainable=False, dtype=tf.int32, name='global_step')
 
+                #splits a tensor into sub tensors 
                 image_splits = tf.split(image_batch_placeholder, config.num_gpus)
                 label_splits = tf.split(label_batch_placeholder, config.num_gpus)
                 grads_splits = []
                 split_dict = {}
+
+                #function for insering values into a dicitonary based on a key
                 def insert_dict(k,v):
                     if k in split_dict: split_dict[k].append(v)
                     else: split_dict[k] = [v]
-                        
+
+                #numgpus = 1
                 for i in range(config.num_gpus):
                     scope_name = '' if i==0 else 'gpu_%d' % i
+                    # A context manager for use when defining a Python op
+                    # context manager pushes a name scope, which will make the name of all operations added within it have a prefix.
                     with tf.name_scope(scope_name):
                         with tf.variable_scope('', reuse=i>0):
+                            #Specifies the device for ops created/executed in this context
                             with tf.device('/gpu:%d' % i):
+                                #identity returns a tensor with same shape and contents as input
                                 images = tf.identity(image_splits[i], name='inputs')
                                 labels = tf.identity(label_splits[i], name='labels')
                                 # Save the first channel for testing
@@ -84,18 +109,20 @@ class Network:
                                         tf.summary.image('transformed_image', images)
                                 else:
                                     images = images
-
+                                #calls import_file, passes lemurnet as network
                                 network = utils.import_file(config.network, 'network')
+                                #calls inference function in lemurnet file
                                 prelogits = network.inference(images, keep_prob_placeholder, phase_train_placeholder,
                                                         bottleneck_layer_size = config.embedding_size, 
                                                         weight_decay = config.weight_decay, 
                                                         model_version = config.model_version)
                                 prelogits = tf.identity(prelogits, name='prelogits')
+                                #Normalizes along dimension axis using an L2 norm
                                 embeddings = tf.nn.l2_normalize(prelogits, dim=1, name='embeddings')
                                 if i == 0:
                                     self.outputs = tf.identity(embeddings, name='outputs')
 
-                                # Build all losses
+                                # Build all loss functions
                                 losses = []
 
                                 # Orignal Softmax

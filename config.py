@@ -68,6 +68,11 @@ embedding_size = 512
 
 ####### TRAINING STRATEGY #######
 
+#The learning rate is a hyperparameter that controls how much to change the model in
+#response to the estimated error each time the model weights are updated
+#very important hyperparameter
+
+#RMSPROP is a type of stochastic gradient descent with adaptive learning rates
 # Optimizer
 optimizer = "RMSPROP"
 
@@ -80,7 +85,7 @@ epoch_size = 80
 # Number of epochs
 num_epochs = 300
 
-# learning rate strategy
+#learning rate strategy
 learning_rate_strategy = 'step'
 
 # learning rate schedule
@@ -110,12 +115,16 @@ restore_scopes = None
 weight_decay = 5e-4
 
 # Keep probability for dropouts
+# keep_prob value is used to control the dropout rate when training the neural network
+# means that each connection between layers will only be used with probability 1 when training
+# This reduces overfitting.
 keep_prob = 1.0
 
 
 
 ####### LOSS FUNCTION #######
-
+# Also known as error function, estimates the loss or error of the model so that the weights
+# can be updated
 # Scale for the logits
 losses = {
     #'softmax': {},
