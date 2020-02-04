@@ -62,7 +62,7 @@ def create_log_dir(config, config_file):
 class DataClass():
     def __init__(self, class_name, indices, label):
         self.class_name = class_name
-        self.indices = list(indices)
+        self.indices = list(indices) # indices of images with this label
         self.label = label
         return
 
@@ -183,7 +183,7 @@ class Dataset():
         self.classes = np.array(classes, dtype=np.object)
         self.num_classes = len(classes)
        
-
+    ''' Not used '''
     def build_subset_from_classes(self, classes):
         images = []
         labels = []
@@ -201,6 +201,7 @@ class Dataset():
         print('built subset: %d images of %d classes' % (len(subset.images), subset.num_classes))
         return subset
 
+    ''' Not used '''
     def split_k_folds(self, k):
         self.kf = KFold(n_splits = k)
         self.train_idx = []
@@ -210,7 +211,7 @@ class Dataset():
             self.test_idx.append(test)
 
 
-
+    ''' Not used '''
     def get_fold(self, fold):
         k = self.kf.get_n_splits(self.classes)
         assert fold <= k
@@ -295,7 +296,7 @@ class Dataset():
         return image_batch, label_batch
 
 
-
+    ''' Not used '''
     def sample_classes_by_weight(self, num_classes_per_batch):
         if self.class_weights is None:
             self.class_weights = [len(dataclass.indices) for dataclass in self.classes]
@@ -311,6 +312,7 @@ class Dataset():
             selected.append(select)
         return selected
 
+    ''' Not used '''
     def get_samples_per_class(self, num_samples_per_class):
         indices = []
         for data_class in self.classes:
