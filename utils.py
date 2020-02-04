@@ -404,6 +404,7 @@ def resize(images, size):
 
     return images_new
 
+''' Normalize images to ensure pixels have a uniform data distribution for faster convergence while training the network '''
 def standardize_images(images, standard):
     if standard=='mean_scale':
         mean = 127.5
@@ -418,6 +419,7 @@ def standardize_images(images, standard):
     images_new = (images_new - mean) / std
     return images_new
 
+''' Reduce overrepresented classes '''
 def random_downsample(images, min_ratio):
     n, _h, _w = images.shape[:3]
     images_new = images
@@ -432,6 +434,7 @@ def random_downsample(images, min_ratio):
     return images_new
 
 
+''' Run various functions as defined in the config preprocess '''
 def preprocess(images, config, is_training=False):
     # Load images first if they are file paths
     if type(images[0]) == str:
@@ -462,7 +465,8 @@ def preprocess(images, config, is_training=False):
     if len(images.shape) == 3:
         images = images[:,:,:,None]
     return images
-        
+
+
 def get_updated_learning_rate(global_step, config):
     if config.learning_rate_strategy == 'step':
         max_step = -1
@@ -482,6 +486,7 @@ def get_updated_learning_rate(global_step, config):
         learning_rate = initial * 0.5 * (math.cos(math.pi * step / end_step) + 1)
     return learning_rate
 
+''' Used to show information while training the network '''
 def display_info(epoch, step, duration, watch_list):
     sys.stdout.write('[%d][%d] time: %2.2f' % (epoch+1, step+1, duration))
     for item in watch_list.items():
@@ -491,6 +496,7 @@ def display_info(epoch, step, duration, watch_list):
             sys.stdout.write('   %s: %d' % (item[0], item[1]))
     sys.stdout.write('\n')
 
+''' Not used currently '''
 def get_pairwise_score_label(score_mat, label):
     n = label.size
     assert score_mat.shape[0]==score_mat.shape[1]==n
@@ -502,6 +508,7 @@ def get_pairwise_score_label(score_mat, label):
     label_vec = label_mat[triu_indices]
     return score_vec, label_vec
 
+''' Not used currently '''
 def split_batches_and_exec(input, batch_size, batch_func):
     '''Split the input into batches to execute given functions.
 
@@ -518,6 +525,7 @@ def split_batches_and_exec(input, batch_size, batch_func):
 
     return result
 
+''' Not used currently '''
 def test_roc(features, labels, FARs):
     n, d = features.shape
     assert n % 2 == 0
