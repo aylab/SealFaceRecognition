@@ -36,6 +36,7 @@ from tensorflow.contrib.tensorboard.plugins import projector
 import evaluate
 
 # Config File
+start_time=time.time()
 parser = argparse.ArgumentParser()
 parser.add_argument('--config_file', help='Path to training configuration file', type=str)
 config_file = parser.parse_args().config_file
@@ -118,4 +119,7 @@ for epoch in range(config.num_epochs):
 
     # Save the model
     network.save_model(log_dir, global_step)
+    
+elapsed_time = time.time() - start_time
+print(elapsed_time)
 
