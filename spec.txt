@@ -1,0 +1,6 @@
+tensorflow==1.13.1
+scikit-learn
+matplotlib
+Pillow
+scipy==1.1.0
+
