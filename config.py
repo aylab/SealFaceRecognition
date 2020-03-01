@@ -10,7 +10,7 @@ import os
 
 fold_number = 1
 
-name = 'primate_net_fold_' + str(fold_number)
+name = 'seal_net_fold_' + str(fold_number)
 
 # The folder to save log and model
 log_base_dir = './log/'
@@ -19,7 +19,7 @@ log_base_dir = './log/'
 summary_interval = 5
 
 # Dataset
-dataset_path = "LemurDataset"
+dataset_path = "seals_faces"
 
 
 # Cross-validation Parameters
@@ -90,7 +90,7 @@ learning_rate_strategy = 'step'
 
 # learning rate schedule
 learning_rate_schedule = {
-    0:      0.01,
+    0:      0.001,
     #400:      0.01,
     #480:    0.001,
     #5000:   0.001,
@@ -130,7 +130,7 @@ losses = {
     #'softmax': {},
     #'cosine': {'gamma': 'auto'},
     # 'angular': {'m': 4, 'lamb_min':5.0, 'lamb_max':1500.0},
-    'split': {'gamma': 'auto'}
-    # 'norm': {'alpha': 1e-5},
+    #'split': {'gamma': 'auto'}
+     'norm': {'alpha': 1e-5},
 }
 
