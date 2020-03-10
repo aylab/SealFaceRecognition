@@ -80,10 +80,10 @@ optimizer = "RMSPROP"
 batch_size = 128
 
 # Number of batches per epoch
-epoch_size = 80
+epoch_size = 8
 
 # Number of epochs
-num_epochs = 300
+num_epochs = 30
 
 #learning rate strategy
 learning_rate_strategy = 'step'
