@@ -1,0 +1,39 @@
+--------------------------------
+SEALNET USER GUIDE
+--------------------------------
+This document is intended as a detailed guide to help with installation and running of
+SealNet, a face recognition software for Harbor Seals. The instructions are intended to 
+run the software on Amazon Web Services (AWS) EC2 cluster running Linux but they can be 
+modified for use on other setups running Linux or other Unix-like systems.
+To run a command, type it out on the terminal and hit enter.
+
+--------------------------------
+CONNECTING TO AWS
+--------------------------------
+The instructions assume you are running MacOs or some other Unix-like system. If you have
+Windows installed, you may need to download and install OpenSSH
+https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
+and run modified versions of some of the commands.
+
+1. Download your SSH_KEY to your Downloads folder
+2. Start the aws instance (contact ITS for more instructions)
+3. Download the ssh key to the Downloads folder
+4. Open terminal application from the applications folder
+5. Run 'cd ~/Downloads/' to change the directory
+6. Run 'ssh -i SSH_KEY USERNAME@AWS_CLUSTER_NAME' replacing SSH_KEY, USERNAME and AWS_CLUSTER_NAME
+as appropriate. For example 'ssh -i jdoe_id_rsa jdoe@gpu-1.colgate.edu'
+7. Type in yes when prompted and hit enter
+
+--------------------------------
+INSTALLATION
+--------------------------------
+Change dir, Download Repo, Download images, 
+install conda, install reqs,
+
+--------------------------------
+RUNNING
+--------------------------------
+Run train.py
+--------------------------------
+
+--------------------------------
