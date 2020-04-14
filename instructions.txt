@@ -8,12 +8,11 @@ modified for use on other setups running Linux or other Unix-like systems.
 To run a command, type it out on the terminal and hit enter.
 
 --------------------------------
-CONNECTING TO AWS
+CONNECT TO AWS
 --------------------------------
 The instructions assume you are running MacOs or some other Unix-like system. If you have
 Windows installed, you may need to download and install OpenSSH
-https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
-and run modified versions of some of the commands.
+https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse.
 
 1. Download your SSH_KEY to your Downloads folder
 2. Start the aws instance (contact ITS for more instructions)
@@ -25,15 +24,40 @@ as appropriate. For example 'ssh -i jdoe_id_rsa jdoe@gpu-1.colgate.edu'
 7. Type in yes when prompted and hit enter
 
 --------------------------------
-INSTALLATION
+INSTALL THE VIRTUAL ENVIRONMENT
 --------------------------------
-Change dir, Download Repo, Download images, 
-install conda, install reqs,
+These instructions assume the EC2 instance has been configured by Colgate ITS. You will need
+git and latest python3 installed.
+
+1. Run 'cd /data' to access the data directory
+2. Run 'mkdir USERNAME' replacing USERNAME as appropriate to create your workspace. This will be the
+primary working directory.
+3. Run 'cd USERNAME'
+4. Run 'wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh' to download the 
+Anaconda installer.
+5.  a. Run 'bash Anaconda3-2020.02-Linux-x86_64.sh' to start the installation process.
+    b. Hit enter for the first prompt
+    c. Hit q to skip to the end of the license, type yes for the prompt and hit enter.
+    d. Type in '/data/USERNAME/anaconda3' for the install location and hit enter
+    e. Type yes for the next prompt and hit enter
+    The installation is now complete
+6.  a. Run 'conda create --name myenv pip' to create an environment and install pip 
+    b. Type y and hit enter at the prompt
+
+--------------------------------
+SET UP SEALNET
+--------------------------------
+1. Run 'git clone https://github.com/dgathogo/SealFaceRecognition.git' to download SealNet
+2. Run 'git clone photosrepo.git' to download the photos
+2. Run 'cd SealFaceRecognition' to change directory
+3. Run 'conda install --file requirements.txt' to install dependencies
 
 --------------------------------
 RUNNING
 --------------------------------
-Run train.py
---------------------------------
-
---------------------------------
+These instructions assume that the dataset directory is in the same location as the SealNet 
+directory. If not, change the second argument in step 2 and specify the correct path to the 
+training dataset.
+1. Run 'conda activate myenv' to start the virtual environment
+2. Run 'python train.py -c config.py -d ../photos' to start training the network
+3. The results are found in the directory log/. A summary is also written in log/results.txt.
