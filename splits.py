@@ -8,30 +8,32 @@
  Output: List of absolute paths to individual photos and the individual name
 '''
 
-from argparse import ArgumentParser
 import os 
 from pathlib import Path
 
-def main():
-    arg_parser = ArgumentParser(description='Create Splits', add_help=False)
-    arg_parser.add_argument('-d', '--directory', dest='directory', action='store',
-            type=str, required=True, help='''Directory containing subdirectories that contain photos''')
+def create_splits(directory):
+    individuals = get_individuals(directory)
+    with open('./splits/fold_1/gal_1.txt','w') as f:
+        for key, value in individuals.items():
+            for item in value:
+                f.write(item + ' ' + key + '\n')
 
-    settings = arg_parser.parse_args()
-    prefix = Path(settings.directory).resolve()
+
+def get_individuals(directory):
+    prefix = Path(directory).resolve()
     extensions = ('png', 'jpg', 'jpeg')
-
-    for individual in os.listdir(settings.directory):
-        name = str(int(individual))
-        path = os.path.join(prefix, individual)
+    individuals = {}
+    for item in os.listdir(directory):
+        
+        path = os.path.join(prefix, item)
         if not os.path.isdir(path):
             continue
+        name = str(int(item))
+        individuals[name] = []
         for file_name in os.listdir(path):
             if not file_name.lower().endswith(extensions):
                 continue
             file_path = os.path.join(path, file_name)
-            print(str(file_path) + ' ' + name)
-
-
-if __name__=='__main__':
-    main()
+            individuals[name].append(str(file_path))
+    
+    return individuals
