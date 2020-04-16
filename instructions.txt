@@ -30,34 +30,44 @@ These instructions assume the EC2 instance has been configured by Colgate ITS. Y
 git and latest python3 installed.
 
 1. Run 'cd /data' to access the data directory
-2. Run 'mkdir USERNAME' replacing USERNAME as appropriate to create your workspace. This will be the
-primary working directory.
-3. Run 'cd USERNAME'
+2. Run 'mkdir USERNAME_workspace' replacing USERNAME as appropriate to create your workspace. This
+   will be the primary working directory.
+3. Run 'cd USERNAME_workspace'
 4. Run 'wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh' to download the 
-Anaconda installer.
+   Anaconda installer.
 5.  a. Run 'bash Anaconda3-2020.02-Linux-x86_64.sh' to start the installation process.
     b. Hit enter for the first prompt
     c. Hit q to skip to the end of the license, type yes for the prompt and hit enter.
-    d. Type in '/data/USERNAME/anaconda3' for the install location and hit enter
+    d. Type in '/data/USERNAME_workspace/anaconda3' for the install location and hit enter
     e. Type yes for the next prompt and hit enter
     The installation is now complete
-6.  a. Run 'conda create --name myenv pip' to create an environment and install pip 
-    b. Type y and hit enter at the prompt
+6.  a. Run 'conda create --name myenv python=3.7' to create an environment.
+    b. Type y and hit enter at the prompt.
 
 --------------------------------
 SET UP SEALNET
 --------------------------------
 1. Run 'git clone https://github.com/dgathogo/SealFaceRecognition.git' to download SealNet
-2. Run 'git clone photosrepo.git' to download the photos
-2. Run 'cd SealFaceRecognition' to change directory
-3. Run 'conda install --file requirements.txt' to install dependencies
+2.  a. Download or copy the photos for training SealNet to your Downloads folder
+    b. In another terminal window, run 'cd ~/Downloads/' to change directory
+    c. Run 'scp -i SSH_KEY -r photos/ USERNAME@AWS_CLUSTER_NAME:/data/USERNAME_workspace/photos' to
+     copy the photos
+3. In the other terminal window still logged into AWS, run 'cd SealFaceRecognition' to change 
+   directory
+4. Install dependencies found in requirements.txt. For each command, run the command and then type
+   in y and hit enter to install required dependencies at the prompt.
+    a. 'conda activate myenv'
+    b. 'conda install tensorflow=1.13.1'
+    c. 'conda install scikit-learn'
+    d. 'conda install matplotlib'
+    e. 'conda install Pillow'
+    f. 'conda install scipy=1.1.0'
 
 --------------------------------
 RUNNING
 --------------------------------
 These instructions assume that the dataset directory is in the same location as the SealNet 
-directory. If not, change the second argument in step 2 and specify the correct path to the 
-training dataset.
+directory. It is also assumed that the project has been set up as in previous instructions.
 1. Run 'conda activate myenv' to start the virtual environment
 2. Run 'python train.py -c config.py -d ../photos' to start training the network
 3. The results are found in the directory log/. A summary is also written in log/results.txt.
