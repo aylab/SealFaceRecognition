@@ -1,3 +1,4 @@
+#! /usr/local/bin/python3
 """Main training file for face recognition
 """
 # MIT License
@@ -28,20 +29,28 @@ import time
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import numpy as np
-import argparse
+from argparse import ArgumentParser
 import utils
 import tflib
 from network import Network
 from tensorflow.contrib.tensorboard.plugins import projector
 import evaluate
+import splits
 
 # Config File
-start_time=time.time()
-parser = argparse.ArgumentParser()
-parser.add_argument('--config_file', help='Path to training configuration file', type=str)
-config_file = parser.parse_args().config_file
+# start_time=time.time()
+parser = ArgumentParser(description='Train SealNet', add_help=False)
+parser.add_argument('-c','--config_file', dest='config_file', action='store', 
+    type=str, required=True, help='Path to training configuration file', )
+parser.add_argument('-d', '--directory', dest='directory', action='store',
+    type=str, required=True, help='''Directory containing subdirectories that contain photos''')
+
+settings = parser.parse_args()
+
+splits.create_splits(settings.directory)
+
 # I/O
-config = utils.import_file(config_file, 'config')
+config = utils.import_file(settings.config_file, 'config')
 
 trainset = utils.Dataset(config.splits_path +  '/train_' + str(config.fold_number) + '.txt')
 trainset.images = utils.preprocess(trainset.images, config, True)
