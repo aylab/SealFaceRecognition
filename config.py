@@ -77,7 +77,7 @@ embedding_size = 512
 optimizer = "RMSPROP"
 
 # Number of samples per batch
-batch_size = 128
+batch_size = 16
 
 # Number of batches per epoch
 epoch_size = 8
