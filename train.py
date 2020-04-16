@@ -33,7 +33,7 @@ from argparse import ArgumentParser
 import utils
 import tflib
 from network import Network
-from tensorflow.contrib.tensorboard.plugins import projector
+# from tensorflow.contrib.tensorboard.plugins import projector
 import evaluate
 import splits
 
