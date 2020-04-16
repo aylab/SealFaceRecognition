@@ -60,7 +60,7 @@ network.initialize(config, trainset.num_classes)
 
 
 # Initalization for running
-log_dir = utils.create_log_dir(config, config_file)
+log_dir = utils.create_log_dir(config, settings.config_file)
 summary_writer = tf.summary.FileWriter(log_dir, network.graph)
 if config.restore_model:
     network.restore_model(config.restore_model, config.restore_scopes)
