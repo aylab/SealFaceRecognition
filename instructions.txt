@@ -8,6 +8,33 @@ modified for use on other setups running Linux or other Unix-like systems.
 To run a command, type it out on the terminal and hit enter.
 
 --------------------------------
+DATA
+--------------------------------
+SealNet is a face recognition software that is trained using photos. As of now, the software
+expects files of png, jpg and jpeg formats. 
+The directories must be structured as follows:
+
+.
+├── SealFaceRecognition
+└── photos
+    ├── cross_validation
+    │   ├── seal_1
+    │   │   ├── photo1.png
+    │   │   └── photo2.png
+    │   └── seal_2
+    │       ├── photo1.jpg
+    │       └── photo2.jpg
+    └── training
+        ├── seal_3
+        │   ├── photo1.png
+        │   └── photo2.png
+        └── seal_4
+            ├── photo1.jpg
+            └── photo2.jpg
+
+The photos directory will then be copied to AWS as shown in step 2 of 'SET UP SEALNET'
+
+--------------------------------
 CONNECT TO AWS
 --------------------------------
 The instructions assume you are running MacOs or some other Unix-like system. If you have
@@ -20,8 +47,9 @@ https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_i
 4. Open terminal application from the applications folder
 5. Run 'cd ~/Downloads/' to change the directory
 6. Run 'ssh -i SSH_KEY USERNAME@AWS_CLUSTER_NAME' replacing SSH_KEY, USERNAME and AWS_CLUSTER_NAME
-as appropriate. For example 'ssh -i jdoe_id_rsa jdoe@gpu-1.colgate.edu'
+  as appropriate. For example 'ssh -i jdoe_id_rsa jdoe@gpu-1.colgate.edu'
 7. Type in yes when prompted and hit enter
+8. To end the AWS session type in 'sudo poweroff' and hit enter.
 
 --------------------------------
 INSTALL THE VIRTUAL ENVIRONMENT
@@ -66,15 +94,19 @@ SET UP SEALNET
 --------------------------------
 RUNNING
 --------------------------------
-These instructions assume that the dataset directory is in the same location as the SealNet 
-directory. It is also assumed that the project has been set up as in previous instructions.
-1. Run 'conda activate myenv' to start the virtual environment
-2. Run 'cd /data/USERNAME_workspace/SealFaceRecognition' to change directory
+These instructions assume that the project has been set up as in previous instructions.
+
+Revisit 'CONNECT TO AWS' instructions above to connect to AWS from terminal application. 
+
+The rest of these steps assume you are connected to AWS. Type the commands in the terminal window
+without the quotes and then hit enter to run them.
+
+If you need to run SealNet using new data, make sure it is formatted properly as shown in 'DATA'
+above. Open a new terminal window and then use step 2 in 'SET UP SEALNET' to copy the data to AWS.
+Once the data is ready, go back to the previous terminal window still logged in to AWS.
+
+1. Run 'cd /data/USERNAME_workspace/SealFaceRecognition' to change directory
+2. Run 'conda activate myenv' to start the virtual environment 
 3. Run 'python train.py -c config.py -d ../photos' to start training the network
 4. The results are found in the directory log/ and a summary is also written in log/results.txt.
-
-***********************
-Bad images
-050_10
-074_02
-**********************
+5. Run 'sudo poweroff to end the AWS session'
