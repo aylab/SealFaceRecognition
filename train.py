@@ -47,7 +47,7 @@ parser.add_argument('-d', '--directory', dest='directory', action='store',
 
 settings = parser.parse_args()
 
-splits.create_splits(settings.directory)
+splits.create_splits(settings.directory, 5)
 
 # I/O
 config = utils.import_file(settings.config_file, 'config')

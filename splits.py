@@ -11,12 +11,21 @@
 import os 
 from pathlib import Path
 
-def create_splits(directory):
+def create_splits(directory, splits):
     individuals = get_individuals(directory)
-    with open('./splits/fold_1/gal_1.txt','w') as f:
+    for i in range(splits):
+        gallery = open('./splits/fold_1/gal_{}.txt'.format(i+1),'w')
+        probe = open('./splits/fold_1/probe_{}.txt'.format(i+1),'w')
         for key, value in individuals.items():
-            for item in value:
-                f.write(item + ' ' + key + '\n')
+            if i >= len(value):
+                continue
+            probe.write(value[i]+ ' ' + key + '\n')
+            for j in range(len(value)):
+                if j != i:
+                    gallery.write(value[j] + ' ' + key + '\n')
+            
+        gallery.close()
+        probe.close()
 
 
 def get_individuals(directory):
