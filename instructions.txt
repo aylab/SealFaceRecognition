@@ -69,5 +69,12 @@ RUNNING
 These instructions assume that the dataset directory is in the same location as the SealNet 
 directory. It is also assumed that the project has been set up as in previous instructions.
 1. Run 'conda activate myenv' to start the virtual environment
-2. Run 'python train.py -c config.py -d ../photos' to start training the network
-3. The results are found in the directory log/. A summary is also written in log/results.txt.
+2. Run 'cd /data/USERNAME_workspace/SealFaceRecognition' to change directory
+3. Run 'python train.py -c config.py -d ../photos' to start training the network
+4. The results are found in the directory log/ and a summary is also written in log/results.txt.
+
+***********************
+Bad images
+050_10
+074_02
+**********************
