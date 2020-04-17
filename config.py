@@ -57,10 +57,10 @@ num_gpus = 1
 localization_net = None
 
 # The network architecture
-network = "nets/lemur_net.py"
+network = "nets/seal_net.py"
 
 # Model version, only for some networks
-model_version = 'lemur'
+model_version = 'seal'
 
 # Number of dimensions in the embedding space
 embedding_size = 512
