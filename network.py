@@ -109,9 +109,9 @@ class Network:
                                         tf.summary.image('transformed_image', images)
                                 else:
                                     images = images
-                                #calls import_file, passes lemurnet as network
+                                #calls import_file, passes sealnet as network
                                 network = utils.import_file(config.network, 'network')
-                                #calls inference function in lemurnet file
+                                #calls inference function in sealnet file
                                 prelogits = network.inference(images, keep_prob_placeholder, phase_train_placeholder,
                                                         bottleneck_layer_size = config.embedding_size, 
                                                         weight_decay = config.weight_decay, 

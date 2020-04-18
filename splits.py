@@ -26,7 +26,7 @@ def create_splits(directory):
     create_training_set(training)
 
 def create_training_set(individuals):
-    with open('./splits/train1.txt', 'w') as f:
+    with open('./splits/train_1.txt', 'w') as f:
         for key, value in individuals.items():
             for v in value:
                 f.write(v + ' ' + key + '\n')
