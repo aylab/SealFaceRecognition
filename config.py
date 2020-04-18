@@ -18,10 +18,6 @@ log_base_dir = './log/'
 # The interval between writing summary
 summary_interval = 5
 
-# Dataset
-dataset_path = "seals_faces"
-
-
 # Cross-validation Parameters
 K_CV = 5    # Number of cross-validation folds (training/testing splits)
 splits_path = './splits'
@@ -90,7 +86,7 @@ learning_rate_strategy = 'step'
 
 # learning rate schedule
 learning_rate_schedule = {
-    0:      0.001,
+    0:      0.0001,
     #400:      0.01,
     #480:    0.001,
     #5000:   0.001,
@@ -129,8 +125,8 @@ keep_prob = 1.0
 losses = {
     #'softmax': {},
     #'cosine': {'gamma': 'auto'},
-    # 'angular': {'m': 4, 'lamb_min':5.0, 'lamb_max':1500.0},
-    #'split': {'gamma': 'auto'}
+    #'angular': {'m': 4, 'lamb_min':5.0, 'lamb_max':1500.0},
+    # 'split': {'gamma': 'auto'}
      'norm': {'alpha': 1e-5},
 }
 
