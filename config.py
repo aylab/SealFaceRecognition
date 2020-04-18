@@ -77,13 +77,13 @@ embedding_size = 512
 optimizer = "RMSPROP"
 
 # Number of samples per batch
-batch_size = 16
+batch_size = 64
 
 # Number of batches per epoch
-epoch_size = 8
+epoch_size = 80
 
 # Number of epochs
-num_epochs = 30
+num_epochs = 100
 
 #learning rate strategy
 learning_rate_strategy = 'step'
@@ -106,7 +106,7 @@ learning_rate_multipliers = {
 template_batch = False
 
 # Restore model
-restore_model = None
+restore_model = False
 
 # Keywords to filter restore variables, set None for all
 restore_scopes = None
