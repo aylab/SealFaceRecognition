@@ -67,9 +67,8 @@ def get_individuals(directory):
         name = str(int(item))
         individuals[name] = []
         for file_name in os.listdir(path):
-            if not file_name.lower().endswith(extensions):
-                continue
-            file_path = os.path.join(path, file_name)
-            individuals[name].append(str(file_path))
+            if file_name.lower().endswith(extensions):
+                file_path = os.path.join(path, file_name)
+                individuals[name].append(str(file_path))
     
     return individuals
