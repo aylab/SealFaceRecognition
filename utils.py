@@ -420,8 +420,8 @@ def standardize_images(images, standard):
             mean = np.mean(images,axis=(1,2,3)).reshape([-1,1,1,1])
             std = np.std(images, axis=(1,2,3)).reshape([-1,1,1,1])
         else:
-            mean = np.mean(images,axis=(1,2,1)).reshape([-1,1,1,1])
-            std = np.std(images, axis=(1,2,1)).reshape([-1,1,1,1])
+            mean = np.mean(images,axis=(1,2)).reshape([-1,1,1,1])
+            std = np.std(images, axis=(1,2)).reshape([-1,1,1,1])
     images_new = images.astype(np.float32)
     images_new = (images_new - mean) / std
     return images_new
