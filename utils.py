@@ -408,6 +408,7 @@ def resize(images, size):
 
 ''' Normalize images to ensure pixels have a uniform data distribution for faster convergence while training the network '''
 def standardize_images(images, standard):
+    channels = 3 if images[0].shape == (112,112,3) else 1
     if standard=='mean_scale':
         mean = 127.5
         std = 128.0
@@ -415,8 +416,12 @@ def standardize_images(images, standard):
         mean = 0.0
         std = 255.0
     elif standard=='deb':
-        mean = np.mean(images,axis=(1,2,3)).reshape([-1,1,1,1])
-        std = np.std(images, axis=(1,2,3)).reshape([-1,1,1,1])
+        if channels == 3:
+            mean = np.mean(images,axis=(1,2,3)).reshape([-1,1,1,1])
+            std = np.std(images, axis=(1,2,3)).reshape([-1,1,1,1])
+        else:
+            mean = np.mean(images,axis=(1,2,1)).reshape([-1,1,1,1])
+            std = np.std(images, axis=(1,2,1)).reshape([-1,1,1,1])
     images_new = images.astype(np.float32)
     images_new = (images_new - mean) / std
     return images_new
