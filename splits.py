@@ -19,7 +19,7 @@ def create_splits(directory):
     for item in os.listdir(directory):
         if item.endswith('training'):
             training = get_individuals(os.path.join(prefix, item))
-        if item.endswith('cross_validation'):
+        if item.endswith('testing'):
             cv = get_individuals(os.path.join(prefix, item))
 
     create_cv_set(cv)
@@ -40,19 +40,19 @@ def create_cv_set(individuals):
     for i in range(splits):
         gallery = open('./splits/fold_1/gal_{}.txt'.format(i+1),'w')
         probe = open('./splits/fold_1/probe_{}.txt'.format(i+1),'w')
-        verification = open('./splits/fold_1/verification.txt'.format(i+1),'w')
+        # verification = open('./splits/fold_1/verification.txt'.format(i+1),'w')
         for key, value in individuals.items():
             if i >= len(value):
                 continue
             probe.write(value[i]+ ' ' + key + '\n')
             for j in range(len(value)):
-                verification.write(value[j] + ' ' + key + '\n')
+                # verification.write(value[j] + ' ' + key + '\n')
                 if j != i:
                     gallery.write(value[j] + ' ' + key + '\n')
             
         gallery.close()
         probe.close()
-        verification.close()
+        # verification.close()
 
 
 def get_individuals(directory):

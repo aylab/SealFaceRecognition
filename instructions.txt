@@ -17,7 +17,7 @@ The directories must be structured as follows:
 .
 ├── SealFaceRecognition
 └── photos
-    ├── cross_validation
+    ├── testing
     │   ├── seal_1
     │   │   ├── photo1.png
     │   │   └── photo2.png
