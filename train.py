@@ -36,9 +36,9 @@ from network import Network
 # from tensorflow.contrib.tensorboard.plugins import projector
 import evaluate
 import splits
+import shutil
 
 # Config File
-# start_time=time.time()
 parser = ArgumentParser(description='Train SealNet', add_help=False)
 parser.add_argument('-c','--config_file', dest='config_file', action='store', 
     type=str, required=True, help='Path to training configuration file', )
@@ -58,13 +58,11 @@ trainset.images = utils.preprocess(trainset.images, config, True)
 network = Network()
 network.initialize(config, trainset.num_classes)
 
-
 # Initalization for running
 log_dir = utils.create_log_dir(config, settings.config_file)
 summary_writer = tf.summary.FileWriter(log_dir, network.graph)
 if config.restore_model:
     network.restore_model(config.restore_model, config.restore_scopes)
-
 
 # Load gallery and probe file_list
 print('Loading images...')
@@ -85,7 +83,6 @@ gal_set = evaluate.ImageSet(gal, config)
 
 trainset.start_batch_queue(config, True)
 
-
 #
 # Main Loop
 #
@@ -100,7 +97,6 @@ for epoch in range(config.num_epochs):
         learning_rate = utils.get_updated_learning_rate(global_step, config)
         image_batch, label_batch = trainset.pop_batch_queue()
 
-
         wl, sm, global_step = network.train(image_batch, label_batch, learning_rate, config.keep_prob)
 
         # Display
@@ -111,7 +107,6 @@ for epoch in range(config.num_epochs):
             utils.display_info(epoch, step, duration, wl)
             summary_writer.add_summary(sm, global_step=global_step)
 
-    
     # Testing
     print('Testing...')
     probe_set.extract_features(network, len(probes))
@@ -128,7 +123,5 @@ for epoch in range(config.num_epochs):
 
     # Save the model
     network.save_model(log_dir, global_step)
-    
-elapsed_time = time.time() - start_time
-print(elapsed_time)
 
+shutil.copyfile(os.path.join(log_dir,'result.txt'), os.path.join('log/result.txt'))
