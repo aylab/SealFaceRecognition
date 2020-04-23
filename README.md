@@ -17,7 +17,7 @@ This project uses [Tensorflow](https://www.tensorflow.org/).
 2. Create a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) virtual environment and activate it.
 
   ```sh
-  conda create --name myenv pip
+  conda create --name myenv python=3.7 pip
   conda activate myenv
   ```
 
@@ -33,12 +33,12 @@ This project uses [Tensorflow](https://www.tensorflow.org/).
 For training on seal face images:
 
 ```sh
-python train.py --config_file config.py --directory /path/to/photos
+python train.py -c config.py -d /path/to/photos
 ```
 <!-- CONFIG EXAMPLE -->
 ## Configuration
 
-The `config.py` file contains all the configurations required for training. The root directory should contain subdirectories of primate individuals.
+The `config.py` file contains all the configurations required for training. The root directory should contain subdirectories of seal individuals.
 
 <!-- CONTRIBUTING -->
 ## Contributing
