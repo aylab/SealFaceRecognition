@@ -11,7 +11,7 @@ This project uses [Tensorflow](https://www.tensorflow.org/).
 1. Clone the repo
 
   ```sh
-  git clone https://github.com/dgathogo/SealFaceRecognition.git
+  git clone https://github.com/aylab/SealFaceRecognition.git
   ```
 
 2. Create a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) virtual environment and activate it.
@@ -59,5 +59,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Ryan Dunham - rdunham@colgate.edu
-Daniel Gathogo - dgathogo@colgate.edu
+Ahmet Ay - Colgate University
