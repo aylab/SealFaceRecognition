@@ -107,18 +107,22 @@ above. Open a new terminal window and then use step 2 in 'SET UP SEALNET' to cop
 Once the data is ready, go back to the previous terminal window still logged in to AWS.
 
 1. Run 'cd /data/USERNAME_workspace/SealFaceRecognition' to change directory
-2. Run 'conda activate sealnet_env' to start the virtual environment 
-3. Run 'python train.py -c config.py -d ../photos' to start training the network. Do not close the 
+2. Run 'git pull' to get the latest changes from GitHub
+3. Run 'conda activate sealnet_env' to start the virtual environment 
+4. Run 'python train.py -c config.py -d ../photos' to start training the network. Do not close the 
    terminal window or log out while the program is running.
-4. Run 'sudo poweroff' to end the AWS session or visit http://hpc-aws-launcher.colgate.edu/ and
+5. Run 'sudo poweroff' to end the AWS session or visit http://hpc-aws-launcher.colgate.edu/ and
    click stop
 --------------------------------
 RESULTS
 --------------------------------
-The results are located in log/result.txt. A summary is also written in log/summary.txt
-To copy result.txt to your local machine:
-1. Open a terminal window on your machine (not logged in to AWS)
-2. Make sure you are connected to the VPN and AWS is started.
-3. Run 'cd ~/Downloads' to change directories
-4. Run 'scp -i aay_id_rsa aay@gpu-1.colgate.edu:/data/aay_workspace/SealFaceRecognition/log/result.txt ~/Downloads/' to copy the results file. To copy the entire log directory run:
-'scp -i aay_id_rsa -r aay@gpu-1.colgate.edu:/data/aay_workspace/SealFaceRecognition/log ~/Downloads/log'
+The results are located in log/result.txt. The log directory is a list of all results and 
+checkpoints by the software with each folder containing one run of the program.
+
+To copy the results to your local machine:
+1. Open a terminal window on your machine (not logged in to AWS) from applications folder
+2. Make sure you are connected to the VPN and start AWS at http://hpc-aws-launcher.colgate.edu/.
+3. Run 'cd ~/Downloads' in the terminal to change directories
+4. Run 'scp -i aay_id_rsa aay@gpu-1.colgate.edu:/data/aay_workspace/SealFaceRecognition/log/result.txt ~/Downloads/' to copy the results file. 
+5. To copy the entire log directory run:
+  'scp -i aay_id_rsa -r aay@gpu-1.colgate.edu:/data/aay_workspace/SealFaceRecognition/log ~/Downloads/log'

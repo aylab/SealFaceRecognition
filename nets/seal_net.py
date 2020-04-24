@@ -12,7 +12,7 @@ model_params = {
     '20': ([1, 2, 4, 1], [64, 128, 256, 512]),
     '36': ([2, 4, 8, 2], [64, 128, 256, 512]),
     '64': ([3, 8, 16, 3], [64, 128, 256, 512]),
-    'seal': ([0, 0, 0, 0], [64, 256, 512, 1024], [1,32,32,32,32]),
+    'seal': ([1, 2, 4, 1], [64, 256, 512, 1024], [1,32,32,32,32]),
     'sealDropout': ([0,0,0,0], [64,128,256,512], [1,1,1,1,1])
 }
 
@@ -174,11 +174,12 @@ def inference(images, keep_probability, phase_train=True, bottleneck_layer_size=
                     # net = slim.avg_pool2d(net, 7)
                     net = convolution(net, bottleneck_layer_size, kernel_size=[net.shape[1], net.shape[2]], groups=groups[4], shuffle=False,
                                     stride=1, padding='VALID', scope='bottleneck', xargs=fc_args)
-                    
+                    print('final_conv shape:', [dim.value for dim in net.shape])
                     #net = slim.dropout(net, keep_probability, is_training = phase_train)
                     net = slim.flatten(net)
 
                     # net= slim.batch_norm(net, **batch_norm_params_last)
+                    print('output_layer shape:', [dim.value for dim in net.shape])
 
                     with tf.device(None):
                         tf.summary.histogram('unormed_prelogits', net)

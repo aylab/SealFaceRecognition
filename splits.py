@@ -20,9 +20,9 @@ def create_splits(directory):
         if item.endswith('training'):
             training = get_individuals(os.path.join(prefix, item))
         if item.endswith('testing'):
-            cv = get_individuals(os.path.join(prefix, item))
+            testing = get_individuals(os.path.join(prefix, item))
 
-    create_cv_set(cv)
+    create_testing_set(testing)
     create_training_set(training)
 
 def create_training_set(individuals):
@@ -31,7 +31,7 @@ def create_training_set(individuals):
             for v in value:
                 f.write(v + ' ' + key + '\n')
     
-def create_cv_set(individuals):
+def create_testing_set(individuals):
     splits_dir = os.path.join(os.path.expanduser('./splits/fold_1/'))
     if not os.path.isdir(splits_dir):  
         os.makedirs(splits_dir)
