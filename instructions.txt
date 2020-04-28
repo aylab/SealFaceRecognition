@@ -13,24 +13,19 @@ DATA
 SealNet is a face recognition software that is trained using photos. As of now, the software
 expects files of png, jpg and jpeg formats. 
 The directories must be structured as follows:
-
 .
 ├── SealFaceRecognition
 └── photos
-    ├── testing
-    │   ├── seal_1
-    │   │   ├── photo1.png
-    │   │   └── photo2.png
-    │   └── seal_2
-    │       ├── photo1.jpg
-    │       └── photo2.jpg
-    └── training
-        ├── seal_3
-        │   ├── photo1.png
-        │   └── photo2.png
-        └── seal_4
-            ├── photo1.jpg
-            └── photo2.jpg
+    ├── seal_1
+    │   ├── photo1.png
+    │   └── photo2.png
+    ├── seal_2
+    │   ├── photo1.jpg
+    │   └── photo2.jpg
+    └── seal_3
+        ├── photo1.png
+        ├── photo2.png
+        └── photo3.jpg
 
 The photos directory will then be copied to AWS as shown in step 2 of 'SET UP SEALNET'
 

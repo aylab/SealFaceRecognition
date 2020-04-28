@@ -8,40 +8,42 @@
 
 import os 
 from pathlib import Path
+import random
 
-def create_splits(directory):
+def create_splits(directory, num_splits):
     prefix = Path(directory).resolve()
     splits_dir = os.path.join(os.path.expanduser('./splits'))
 
     if not os.path.isdir(splits_dir):  
         os.makedirs(splits_dir)
-    
-    for item in os.listdir(directory):
-        if item.endswith('training'):
-            training = get_individuals(os.path.join(prefix, item))
-        if item.endswith('testing'):
-            testing = get_individuals(os.path.join(prefix, item))
+    individuals = get_individuals(os.path.join(prefix, directory))
+    labels = list(individuals.keys())
+    num_splits = 5
+    num_testing = len(labels)//5
+    for i in range(num_splits):
+        random.shuffle(labels)
+        create_testing_set(individuals, labels[:num_testing], i+1)
+        create_training_set(individuals, labels[num_testing:], i+1)
 
-    create_testing_set(testing)
-    create_training_set(training)
-
-def create_training_set(individuals):
-    with open('./splits/train_1.txt', 'w') as f:
-        for key, value in individuals.items():
-            for v in value:
+def create_training_set(individuals, labels, counter):
+    fname = './splits/split{}/train_1.txt'.format(counter)
+    with open(fname, 'w') as f:
+        for key in labels:
+            for v in individuals[key]:
                 f.write(v + ' ' + key + '\n')
     
-def create_testing_set(individuals):
-    splits_dir = os.path.join(os.path.expanduser('./splits/fold_1/'))
-    if not os.path.isdir(splits_dir):  
+def create_testing_set(individuals, labels, counter):
+    splits_dir = os.path.join(os.path.expanduser('./splits/split{}/fold_1/'.format(counter)))
+    if not os.path.isdir(splits_dir):
         os.makedirs(splits_dir)
     splits = min([len(value) for key, value in individuals.items()])
 
     for i in range(splits):
-        gallery = open('./splits/fold_1/gal_{}.txt'.format(i+1),'w')
-        probe = open('./splits/fold_1/probe_{}.txt'.format(i+1),'w')
-        # verification = open('./splits/fold_1/verification.txt'.format(i+1),'w')
-        for key, value in individuals.items():
+        gallery = open('./splits/split{}/fold_1/gal_{}.txt'.format(counter, i+1),'w')
+        probe = open('./splits/split{}/fold_1/probe_{}.txt'.format(counter, i+1),'w')
+        # verification = open('./splits{}/fold_1/verification.txt'.format(counter,i+1),'w')
+        for key in labels:
+            value = individuals[key]
             if i >= len(value):
                 continue
             probe.write(value[i]+ ' ' + key + '\n')
