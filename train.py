@@ -135,7 +135,7 @@ def main():
     if os.path.exists(os.path.expanduser('./splits')):
         shutil.rmtree(os.path.expanduser('./splits')) 
    
-    num_trainings = 1
+    num_trainings = 4
     splits.create_splits(settings.directory, num_trainings)
 
     for i in range(num_trainings):

@@ -16,7 +16,7 @@ def create_splits(directory, num_splits):
 
     if not os.path.isdir(splits_dir):  
         os.makedirs(splits_dir)
-    individuals = get_individuals(os.path.join(prefix, directory))
+    individuals = get_individuals(directory)
     labels = list(individuals.keys())
     num_splits = 5
     num_testing = len(labels)//5
@@ -61,8 +61,9 @@ def get_individuals(directory):
     prefix = Path(directory).resolve()
     extensions = ('png', 'jpg', 'jpeg')
     individuals = {}
-    for item in os.listdir(directory):
-        
+    assert(os.path.exists(prefix))
+    
+    for item in os.listdir(prefix):
         path = os.path.join(prefix, item)
         if not os.path.isdir(path):
             continue

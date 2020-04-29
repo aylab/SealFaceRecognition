@@ -171,7 +171,12 @@ def inference(images, keep_probability, phase_train=True, bottleneck_layer_size=
                     net = conv_module(net, num_layers[3], num_kernels[3], groups[3], scope='conv4')
                     print('module_4 shape:', [dim.value for dim in net.shape])
                     
-                    # net = slim.avg_pool2d(net, 7)
+                    
+                    net = convolution(net, bottleneck_layer_size, kernel_size=[net.shape[1], net.shape[2]], groups=groups[4], shuffle=False,
+                                    stride=1, padding='SAME', xargs=fc_args)
+                    print('conv shape:', [dim.value for dim in net.shape])
+                    net = slim.avg_pool2d(net, 7)
+
                     net = convolution(net, bottleneck_layer_size, kernel_size=[net.shape[1], net.shape[2]], groups=groups[4], shuffle=False,
                                     stride=1, padding='VALID', scope='bottleneck', xargs=fc_args)
                     print('final_conv shape:', [dim.value for dim in net.shape])
