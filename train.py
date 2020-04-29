@@ -51,8 +51,11 @@ def train(config_file, counter):
     network.initialize(config, trainset.num_classes)
 
     # Initalization for running
+    if os.path.exists(config.log_base_dir):
+        shutil.rmtree(config.log_base_dir)
+    
     log_dir = utils.create_log_dir(config, config_file)
-    summary_writer = tf.summary.FileWriter(log_dir, network.graph)
+    summary_writer = tf.compat.v1.summary.FileWriter(log_dir, network.graph)
     if config.restore_model:
         network.restore_model(config.restore_model, config.restore_scopes)
 
@@ -116,7 +119,7 @@ def train(config_file, counter):
 
         # Save the model
         network.save_model(log_dir, global_step)
-    results_copy = os.path.join('log/result{}.txt'.format(counter))
+    results_copy = os.path.join('log/result_{}_{}.txt'.format(config.model_version, counter))
     shutil.copyfile(os.path.join(log_dir,'result.txt'), results_copy)
 
 def main():
@@ -127,7 +130,12 @@ def main():
         type=str, required=True, help='''Directory containing subdirectories that contain photos''')
 
     settings = parser.parse_args()
-    num_trainings = 5
+
+    # clean splits directory
+    if os.path.exists(os.path.expanduser('./splits')):
+        shutil.rmtree(os.path.expanduser('./splits')) 
+   
+    num_trainings = 1
     splits.create_splits(settings.directory, num_trainings)
 
     for i in range(num_trainings):
