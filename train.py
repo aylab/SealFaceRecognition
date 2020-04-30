@@ -124,17 +124,22 @@ def main():
     parser.add_argument('-c','--config_file', dest='config_file', action='store', 
         type=str, required=True, help='Path to training configuration file', )
     parser.add_argument('-d', '--directory', dest='directory', action='store',
-        type=str, required=True, help='''Directory containing subdirectories that contain photos''')
+        type=str, required=True, help='Directory containing subdirectories that contain photos')
+    parser.add_argument('-s', '--splits', dest='splits', action='store', type=bool,
+        required=False, help='Flag to use existing splits for training and testing data')
 
     settings = parser.parse_args()
+    print(settings)
+    if not settings.splits:
+        print('Making new splits')
+        # clean splits directory
+        if os.path.exists(os.path.expanduser('./splits')):
+            shutil.rmtree(os.path.expanduser('./splits')) 
+        splits.create_splits(settings.directory, num_trainings)
+    else:
+        print('Using existing splits in the splits folder')
 
-    # clean splits directory
-    if os.path.exists(os.path.expanduser('./splits')):
-        shutil.rmtree(os.path.expanduser('./splits')) 
-   
     num_trainings = 3
-    splits.create_splits(settings.directory, num_trainings)
-
     for i in range(num_trainings):
         train(settings.config_file, i+1)
 
