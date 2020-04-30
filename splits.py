@@ -19,7 +19,7 @@ def create_splits(directory, num_splits):
     individuals = get_individuals(directory)
     labels = list(individuals.keys())
     num_splits = 5
-    num_testing = len(labels)//5
+    num_testing = len(labels)//4
     for i in range(num_splits):
         random.shuffle(labels)
         create_testing_set(individuals, labels[:num_testing], i+1)
@@ -62,7 +62,7 @@ def get_individuals(directory):
     extensions = ('png', 'jpg', 'jpeg')
     individuals = {}
     assert(os.path.exists(prefix))
-    
+
     for item in os.listdir(prefix):
         path = os.path.join(prefix, item)
         if not os.path.isdir(path):
