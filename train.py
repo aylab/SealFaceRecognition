@@ -129,7 +129,7 @@ def main():
         required=False, help='Flag to use existing splits for training and testing data')
 
     settings = parser.parse_args()
-    print(settings)
+    num_trainings = 3
     if not settings.splits:
         print('Making new splits')
         # clean splits directory
@@ -139,7 +139,6 @@ def main():
     else:
         print('Using existing splits in the splits folder')
 
-    num_trainings = 3
     for i in range(num_trainings):
         train(settings.config_file, i+1)
 
