@@ -51,9 +51,6 @@ def train(config_file, counter):
     network.initialize(config, trainset.num_classes)
 
     # Initalization for running
-    if os.path.exists(config.log_base_dir):
-        shutil.rmtree(config.log_base_dir)
-    
     log_dir = utils.create_log_dir(config, config_file)
     summary_writer = tf.compat.v1.summary.FileWriter(log_dir, network.graph)
     if config.restore_model:
@@ -135,7 +132,7 @@ def main():
     if os.path.exists(os.path.expanduser('./splits')):
         shutil.rmtree(os.path.expanduser('./splits')) 
    
-    num_trainings = 4
+    num_trainings = 3
     splits.create_splits(settings.directory, num_trainings)
 
     for i in range(num_trainings):

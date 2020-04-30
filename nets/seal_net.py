@@ -12,7 +12,7 @@ model_params = {
     '20': ([1, 2, 4, 1], [64, 128, 256, 512]),
     '36': ([2, 4, 8, 2], [64, 128, 256, 512]),
     '64': ([3, 8, 16, 3], [64, 128, 256, 512]),
-    'seal': ([1, 2, 4, 1], [64, 256, 512, 1024], [1,32,32,32,32]),
+    'seal': ([0, 1, 2, 1], [64, 256, 512, 1024], [1,32,32,32,32]),
     'sealDropout': ([0,0,0,0], [64,128,256,512], [1,1,1,1,1])
 }
 
@@ -175,7 +175,7 @@ def inference(images, keep_probability, phase_train=True, bottleneck_layer_size=
                     net = convolution(net, bottleneck_layer_size, kernel_size=[net.shape[1], net.shape[2]], groups=groups[4], shuffle=False,
                                     stride=1, padding='SAME', xargs=fc_args)
                     print('conv shape:', [dim.value for dim in net.shape])
-                    net = slim.avg_pool2d(net, 7)
+                    # net = slim.avg_pool2d(net, 7)
 
                     net = convolution(net, bottleneck_layer_size, kernel_size=[net.shape[1], net.shape[2]], groups=groups[4], shuffle=False,
                                     stride=1, padding='VALID', scope='bottleneck', xargs=fc_args)

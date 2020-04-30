@@ -73,13 +73,13 @@ embedding_size = 512
 optimizer = "RMSPROP"
 
 # Number of samples per batch
-batch_size = 32
+batch_size = 64
 
 # Number of batches per epoch
 epoch_size = 20
 
 # Number of epochs
-num_epochs = 50
+num_epochs = 30
 
 #learning rate strategy
 learning_rate_strategy = 'step'
