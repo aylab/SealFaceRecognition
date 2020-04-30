@@ -117,9 +117,9 @@ To copy the results to your local machine:
 1. Open a terminal window on your machine (not logged in to AWS) from applications folder
 2. Make sure you are connected to the VPN and start AWS at http://hpc-aws-launcher.colgate.edu/.
 3. Run 'cd ~/Downloads' in the terminal to change directories
-4. Run 'scp -i aay_id_rsa aay@gpu-1.colgate.edu:/data/aylab_workspace/SealFaceRecognition/log/result.txt ~/Downloads/' to copy the results file. 
-5. To copy the entire log directory run:
-  'scp -i aay_id_rsa -r aay@gpu-1.colgate.edu:/data/aylab_workspace/SealFaceRecognition/log ~/Downloads/log'
+4. Run 'scp -i aay_id_rsa aay@gpu-1.colgate.edu:/data/aylab_workspace/SealFaceRecognition/log/result* ~/Downloads/' to copy all the results files. 
 
-
-Public key error: chmod 400 aay_id_rsa
+NOTE:
+If you try to log in to AWS and you encounter an error that says:
+    WARNING: UNPROTECTED PRIVATE KEY FILE! 
+Run this command 'chmod 400 aay_id_rsa'
