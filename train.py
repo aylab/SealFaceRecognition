@@ -127,9 +127,12 @@ def main():
         type=str, required=True, help='Directory containing subdirectories that contain photos')
     parser.add_argument('-s', '--splits', dest='splits', action='store', type=bool,
         required=False, help='Flag to use existing splits for training and testing data')
+    parser.add_argument('-n', '--number', dest='number', action='store', type=int,
+        required=False, help='Number of times to run the training(default is 3)')
 
     settings = parser.parse_args()
-    num_trainings = 3
+    num_trainings = 3 if not settings.number else settings.number
+    print('Running training {} times'.format(num_trainings))
     if not settings.splits:
         print('Making new splits')
         # clean splits directory
@@ -140,6 +143,7 @@ def main():
         print('Using existing splits in the splits folder')
 
     for i in range(num_trainings):
+        print('Starting training #{}'.format(i+1))
         train(settings.config_file, i+1)
 
 if __name__ == '__main__':
