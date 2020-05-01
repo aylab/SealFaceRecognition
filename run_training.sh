@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 a=$SECONDS
-python train.py -d ../photos/ -c config.py -n 5
+#python train.py -d ../photos/ -c config.py -n 5
 seal_seconds=$(( $SECONDS - $a ))
 sleep 5
 b=$SECONDS
