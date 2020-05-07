@@ -122,4 +122,4 @@ To copy the results to your local machine:
 NOTE:
 If you try to log in to AWS and you encounter an error that says:
     WARNING: UNPROTECTED PRIVATE KEY FILE! 
-Run this command 'chmod 400 aay_id_rsa'
+Run this command 'chmod 400 aay_id_rsa' in the Downloads folder to change permissions on your key.
