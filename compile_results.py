@@ -1,7 +1,7 @@
 import os
 
 def compile(net):
-    fname = 'log/final_results_{}.txt'.format(net)
+    fname = 'final_results_{}.txt'.format(net)
     if os.path.exists(fname):
         os.remove(fname)
 
