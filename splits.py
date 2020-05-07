@@ -18,7 +18,6 @@ def create_splits(directory, num_splits):
         os.makedirs(splits_dir)
     individuals = get_individuals(directory)
     labels = list(individuals.keys())
-    num_splits = 5
     num_testing = len(labels)//4
     for i in range(num_splits):
         random.shuffle(labels)
