@@ -123,3 +123,10 @@ NOTE:
 If you try to log in to AWS and you encounter an error that says:
     WARNING: UNPROTECTED PRIVATE KEY FILE! 
 Run this command 'chmod 400 aay_id_rsa' in the Downloads folder to change permissions on your key.
+
+To reproduce results from the paper:
+1. Log in to AWS.
+2. Run 'cd /data/aylab_workspace/SealFaceRecognition' to change directory
+3. Run 'git pull' to get the latest changes from GitHub 
+4. Run 'conda activate aylab_env' to activate the virtual environment.
+5. Run 'bash run_training.sh'
